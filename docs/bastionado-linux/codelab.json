@@ -1,0 +1,25 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-11-06T09:53:40+01:00",
+  "id": "bastionado-linux",
+  "duration": 0,
+  "title": "Bastionado del arranque en Linux (Debian)",
+  "summary": "Bastionado del arranque del sistema Debian",
+  "source": "p2.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "seguridad",
+    "hardening",
+    "grub"
+  ],
+  "tags": [
+    "web"
+  ],
+  "url": "bastionado-linux"
+}

@@ -1,0 +1,135 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Bastionado de la BIOS/UEFI</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="bastionado-bios"
+                  title="Bastionado de la BIOS/UEFI"
+                  environment="web"
+                  feedback-link="https://github.com/PabloGonz68/ArranqueSistema.git">
+    
+      <google-codelab-step label="1. Introducción" duration="0">
+        <p>En esta guía aprenderás a proteger la BIOS/UEFI de tu equipo para evitar accesos no autorizados al sistema operativo.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2. Requisitos previos" duration="0">
+        <ul>
+<li>Acceso físico al equipo.</li>
+<li>Conocer la tecla para entrar en la BIOS (F2, Supr, F10...).</li>
+<li>Tener permisos de administrador.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3. Contraseña de administrador: Restringir cambios en la BIOS" duration="0">
+        <p>Para asegurar el sistema y evitar que usuarios no autorizados puedan modificar la configuración de la BIOS/UEFI, establece una contraseña de administrador.</p>
+<ol type="1">
+<li>Enciende el equipo y entra en la BIOS.</li>
+<li>Busca la opción <strong>Security</strong> y hay dentro busca algo como <strong>Supervisor Password</strong>.</li>
+</ol>
+<p class="image-container"><img alt="alt text" src="img\\2070ebb70890e5d8.png"></p>
+<ol type="1" start="3">
+<li>Establece una contraseña segura y guárdala.</li>
+<li>Guarda los cambios y reinicia.</li>
+</ol>
+<p><img alt="alt text" src="img\\cd2c284cbd0ccdc8.png"><strong>Importante:</strong> No uses contraseñas triviales como &#34;admin123&#34;. Si la olvidas, tendrás que resetear la BIOS con Clear CMOS.</p>
+<p>Como resultado, solo los usuarios que conozcan la contraseña de administrador podrán modificar la configuración de la BIOS/UEFI.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4. Contraseña de usuario: Evitar accesos al encendido" duration="0">
+        <p>Para proteger el equipo desde el momento en que se enciende, activa la contraseña de usuario o Power-On. Esto asegura que nadie pueda iniciar el sistema sin autorización.</p>
+<ol type="1">
+<li>Vuelve a entrar en la BIOS.</li>
+<li>Busca la opción <strong>User Password</strong> o <strong>Power-On Password</strong> en la sección <strong>Security</strong>.</li>
+</ol>
+<p class="image-container"><img alt="alt text" src="img\\2070ebb70890e5d8.png"></p>
+<ol type="1" start="3">
+<li>Actívala para que el equipo pida contraseña al arrancar. <img alt="alt text" src="img\\cd2c284cbd0ccdc8.png"></li>
+</ol>
+<p>Como resultado, el sistema pedirá contraseña al encenderse, bloqueando accesos no autorizados.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5. Deshabilitar arranque desde dispositivos externos" duration="0">
+        <p>Para evitar que se pueda iniciar el sistema desde USB, CD/DVD u otros medios externos que puedan contener software malicioso, desactiva el arranque desde dispositivos externos.</p>
+<ol type="1">
+<li>Busca el menú <strong>Boot</strong>, <strong>Startup</strong> o <strong>Devices</strong>.</li>
+<li>Desactiva <strong>USB Boot</strong> O <strong>Boot from Removable Devices</strong>. <img alt="alt text" src="img\\41d8700f5cb024a2.png"></li>
+</ol>
+<p>Como resultado, el equipo solo arrancará desde los discos autorizados y se reduce el riesgo de software malicioso.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6. Establecer un orden de arranque seguro" duration="0">
+        <p>Configura el orden de arranque para que el sistema operativo principal sea la primera opción, evitando manipulaciones y arranques no deseados.</p>
+<ol type="1">
+<li>Entra en <strong>Startup</strong> o similar y busca <strong>Primary Boot Sequence</strong>, asegúrate de que el <strong>disco principal</strong> esté primero. <img alt="alt text" src="img\\dd997c041ebd8151.png"></li>
+<li>Mueve &#34;USB&#34; o &#34;CD/DVD&#34; al final de la lista. <img alt="alt text" src="img\\819cdd5e90f3c9cd.png"></li>
+</ol>
+<p>Como resultado, el sistema siempre arrancará desde el disco autorizado y se minimizan riesgos de manipulación.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7. Otras opciones de seguridad" duration="0">
+        <p>Para reforzar aún más la seguridad del BIOS/UEFI, aplica estas configuraciones adicionales:</p>
+<ul>
+<li>Activa <strong>Secure Boot</strong> dentro de <strong>Security</strong> para garantizar que solo se carguen sistemas operativos y controladores firmados digitalmente.. <img alt="alt text" src="img\\a5731a5339e03658.png"></li>
+<li>Desactiva <strong>Wake-on-LAN</strong> si no lo usas, en <strong>Power&gt;Automatic Power On</strong>. <img alt="alt text" src="img\\96a836e268954061.png"></li>
+<li>Bloquea el acceso físico a la torre (Esta medida no se realiza desde la BIOS pero es recomendable en ciertos casos). <img alt="alt text" src="img\\f2a8f39d7371b691.png"></li>
+</ul>
+<p>Habilita TPM (Trusted Platform Module) si está disponible, lo que permite cifrado de disco (BitLocker, LUKS) y autenticación avanzada. <img alt="alt text" src="img\\c7ea86d8adc8b7f.png"><img alt="alt text" src="img\\b92fa1266a8f4ab3.png"></p>
+<p>Desactiva puertos innecesarios para reducir posibles vectores de ataque. <img alt="alt text" src="img\\f82d25361fc23372.png"><img alt="alt text" src="img\\a1c7e6ed55930a96.png"></p>
+<p>Como resultado, el BIOS/UEFI quedará reforzado frente a accesos físicos no autorizados y manipulaciones del arranque.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8. Conclusión" duration="0">
+        <p>Con estas configuraciones, tu sistema será mucho más resistente a accesos físicos no autorizados.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Autor" duration="0">
+        <p>Pablo González Silva — Proyecto de Bastionado del arranque del sistema.</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>

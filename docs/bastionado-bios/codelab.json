@@ -1,0 +1,26 @@
+{
+  "environment": "web",
+  "format": "html",
+  "prefix": "https://storage.googleapis.com",
+  "mainga": "UA-49880327-14",
+  "updated": "2025-11-06T09:53:41+01:00",
+  "id": "bastionado-bios",
+  "duration": 0,
+  "title": "Bastionado de la BIOS/UEFI",
+  "summary": "Bastionado del arranque del sistema BIOS/UEFI",
+  "source": "p1.md",
+  "theme": "",
+  "status": [
+    "published"
+  ],
+  "category": [
+    "seguridad",
+    "hardening",
+    "bios"
+  ],
+  "tags": [
+    "web"
+  ],
+  "feedback": "https://github.com/PabloGonz68/ArranqueSistema.git",
+  "url": "bastionado-bios"
+}

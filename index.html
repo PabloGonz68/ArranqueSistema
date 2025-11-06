@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Índice - Bastionado del Arranque del Sistema</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Roboto:wght@300;400&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 20% 20%, #0f2027, #203a43, #2c5364);
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            color: #00ffc6;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffc6, 0 0 30px #00aaff;
+            animation: fadeDown 1s ease-out;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #9be7ff;
+            margin-bottom: 40px;
+            letter-spacing: 1px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            background: rgba(0, 255, 198, 0.1);
+            color: #00ffc6;
+            border: 2px solid #00ffc6;
+            padding: 15px 35px;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 10px rgba(0, 255, 198, 0.2);
+        }
+
+        .btn:hover {
+            background: #00ffc6;
+            color: #0f2027;
+            box-shadow: 0 0 25px #00ffc6, 0 0 50px #00aaff;
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 20px;
+            font-size: 0.9rem;
+            color: #80cbc4;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px #00ffc6;
+            animation: fadeUp 1.5s ease;
+        }
+
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>⚙️ Bastionado del Arranque del Sistema</h1>
+    <h2>Defiende tu sistema desde la BIOS hasta el GRUB con estilo futurista 🛡️</h2>
+
+    <div class="buttons">
+        <button class="btn" onclick="location.href='https://PabloGonz68.github.io/ArranqueSistema/bastionado-bios/'">🧠
+            Bastionado BIOS / UEFI</button>
+        <button class="btn" onclick="location.href='https://PabloGonz68.github.io/ArranqueSistema/bastionado-linux/'">🐧
+            Bastionado Linux (Debian)</button>
+    </div>
+
+    <div class="footer">
+        © 2025 Pablo González Silva — Proyecto Futurista de Bastionado del Sistema
+    </div>
+</body>
+
+</html>

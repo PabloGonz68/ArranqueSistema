@@ -1,0 +1,166 @@
+
+<!doctype html>
+
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <meta name="theme-color" content="#4F7DC9">
+  <meta charset="UTF-8">
+  <title>Bastionado del arranque en Linux (Debian)</title>
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/claat-public/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="bastionado-linux"
+                  title="Bastionado del arranque en Linux (Debian)"
+                  environment="web"
+                  feedback-link="">
+    
+      <google-codelab-step label="1. Introducción" duration="0">
+        <p>En esta guía aprenderás a proteger el arranque de un sistema Linux basado en Debian, reforzando la configuración del gestor de arranque <strong>GRUB2</strong>. De esta manera, se evita que un atacante pueda modificar o acceder al sistema sin autorización.</p>
+<p>Se cubrirán los siguientes puntos:</p>
+<ul>
+<li>Ocultación del menú de arranque.</li>
+<li>Configuración de contraseña en GRUB2.</li>
+<li>Copias de seguridad del arranque.</li>
+<li>Medidas adicionales de seguridad.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="2. Requisitos previos" duration="0">
+        <ul>
+<li>Sistema operativo Debian o derivado (Ubuntu, Mint, etc.).</li>
+<li>Acceso de superusuario (root o sudo).</li>
+<li>Editor de texto como <code>nano</code> o <code>vim</code>.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="3. Ocultar el menú de GRUB" duration="0">
+        <p>Por defecto, GRUB muestra un menú de selección de sistema operativo al iniciar el equipo. Para evitar que un atacante pueda usarlo, lo ocultaremos.</p>
+<pre><code language="language-bash" class="language-bash">sudo nano /etc/default/grub
+</code></pre>
+<p>Busca las líneas:</p>
+<pre><code>GRUB_TIMEOUT=5
+</code></pre>
+<p>Y reemplázalas por:</p>
+<pre><code>GRUB_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT=0
+</code></pre>
+<p class="image-container"><img alt="alt text" src="img\\83c4d8ec28e64a0a.png"></p>
+<p>Guarda el archivo y actualiza la configuración:</p>
+<pre><code language="language-bash" class="language-bash">sudo update-grub
+</code></pre>
+<p>Esto asegura que los usuarios no vean el menú de arranque y evita intentos de manipulación del kernel o selección de otros sistemas operativos.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="4. Proteger GRUB con contraseña" duration="0">
+        <p>Asignaremos una contraseña al gestor de arranque para evitar modificaciones no autorizadas.</p>
+<p>Primero, genera una contraseña cifrada:</p>
+<pre><code language="language-bash" class="language-bash">sudo grub-mkpasswd-pbkdf2
+</code></pre>
+<p>Introduce la contraseña deseada y copia la salida que comienza con <code>grub.pbkdf2.sha512...</code>.</p>
+<p>Edita el archivo de configuración personalizada:</p>
+<pre><code language="language-bash" class="language-bash">sudo nano /etc/grub.d/40_custom
+</code></pre>
+<p>Agrega al final del archivo (reemplazando por tu hash generado):</p>
+<pre><code>set superusers=&#34;root&#34;
+password_pbkdf2 root grub.pbkdf2.sha512.10000...(tu hash aquí)
+</code></pre>
+<p class="image-container"><img alt="alt text" src="img\\ac638ff6a7cd3217.png"></p>
+<p>Cambia los permisos del archivo para protegerlo:</p>
+<pre><code language="language-bash" class="language-bash">sudo chmod 700 /etc/grub.d/40_custom
+</code></pre>
+<p>Guarda y vuelve a actualizar GRUB:</p>
+<pre><code language="language-bash" class="language-bash">sudo update-grub
+</code></pre>
+<p>Ahora, si alguien intenta editar las opciones del arranque o modificar el kernel, GRUB pedirá la contraseña configurada.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="5. Crear una copia de seguridad del arranque" duration="0">
+        <p>Es recomendable tener una copia de seguridad de los archivos de configuración de GRUB por si se daña o necesitamos restaurarlo.</p>
+<pre><code language="language-bash" class="language-bash">sudo cp /boot/grub/grub.cfg /boot/grub/grub.cfg.bak
+sudo cp -r /etc/grub.d /etc/grub.d.bak
+sudo cp /etc/default/grub /etc/default/grub.bak
+</code></pre>
+<p><img alt="alt text" src="img\\711ae460ce3f90f0.png"> Para restaurar en caso necesario:</p>
+<pre><code language="language-bash" class="language-bash">sudo cp /boot/grub/grub.cfg.bak /boot/grub/grub.cfg
+sudo cp -r /etc/grub.d.bak /etc/grub.d
+sudo cp /etc/default/grub.bak /etc/default/grub
+</code></pre>
+<p>Estas copias permiten recuperar la configuración original si algo sale mal durante el proceso.</p>
+<p class="image-container"><img alt="alt text" src="img\\84c511e72ad13cb6.png"></p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="6. Proteger los archivos de configuración" duration="0">
+        <p>Ajustaremos los permisos del archivo de configuración personalizado para que solo el usuario root pueda modificarlo.</p>
+<pre><code language="language-bash" class="language-bash">sudo chmod 700 /etc/grub.d/40_custom
+</code></pre>
+<p>Esto impide que otros usuarios del sistema alteren las opciones de arranque y refuerza la seguridad del sistema.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="7. Otras medidas de seguridad" duration="0">
+        <ul>
+<li><strong>Cifrado del disco con LUKS (opcional):</strong> Esta medida se aplica <strong>durante la instalación de Debian</strong>, no después. Permite proteger completamente los datos si alguien obtiene acceso físico al equipo. En el asistente de instalación, elige:<pre><code>Guiado - usar disco entero y configurar LVM con cifrado
+</code></pre>
+Luego se solicitará una contraseña para el cifrado antes de iniciar el sistema.</li>
+<li><strong>Secure Boot:</strong> Si tu BIOS/UEFI lo permite, actívalo para garantizar que solo se carguen sistemas y controladores firmados digitalmente.</li>
+<li><strong>Revisión de logs:</strong> Consulta regularmente <code>/var/log/auth.log</code> para detectar intentos de acceso no autorizado.</li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="8. Conclusión" duration="0">
+        <p>Con estas configuraciones, tu sistema Debian tendrá un arranque más seguro. GRUB estará protegido con contraseña, su menú oculto y los archivos de configuración restringidos, dificultando cualquier manipulación del proceso de inicio. Si además se combina con cifrado de disco y un BIOS protegido, se obtiene un arranque robusto y seguro frente a accesos no autorizados.</p>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="9. Referencias" duration="0">
+        <ul>
+<li><a href="https://www.gnu.org/software/grub/manual/grub/grub.html" target="_blank">Documentación oficial de GRUB2</a></li>
+<li><a href="https://www.debian.org/doc/manuals/securing-debian-manual/" target="_blank">Guía de seguridad de Debian</a></li>
+</ul>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="✍️ Autor" duration="0">
+        <p>Pablo González Silva — Proyecto de Bastionado del arranque en Linux (Debian).</p>
+
+
+      </google-codelab-step>
+    
+  </google-codelab>
+
+  <script src="https://storage.googleapis.com/claat-public/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/prettify.js"></script>
+  <script src="https://storage.googleapis.com/claat-public/codelab-elements.js"></script>
+  <script src="//support.google.com/inapp/api.js"></script>
+
+</body>
+</html>
